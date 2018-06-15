@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import PropTypes from 'prop-types'
+import {Layout} from 'antd'
 
 
 class Study extends Component {
@@ -36,13 +37,13 @@ class Study extends Component {
     render(){
         //组件的属性可以在组件类的 this.props 对象上获取,调用函数需要给函数bind this
         return (
-            <div>
+            <Layout style = {{backgroundColor : "#FFF"}}>
                 <p>你好！{this.props.name}</p>
                 <div>
                    <p>{this.state.val}</p>
                     <input type = 'button' value = '按钮' onClick = {this.changeVal.bind(this)} />
                 </div>
-            </div>
+            </Layout>
        );
     }
 }

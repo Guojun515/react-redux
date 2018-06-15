@@ -24,7 +24,7 @@ class Mysider extends React.Component {
     const { pathname } = this.props.location;
     this.setState({
       selectedKey: pathname,
-      openKey : pathname.substr(0, pathname.lastIndexOf('/')),
+      openKey: pathname.substr(0, pathname.lastIndexOf('/')),
     });
   }
 
@@ -68,7 +68,7 @@ class Mysider extends React.Component {
     } else {
       return (
         <Item key={menu.url} >
-          <Link to={menu.url}>
+          <Link to={menu.url} onClick = {() => {this.props.currentMenuTitle(menu.url)}}>
             <Icon type={menu.icon} />
             <span>{menu.title}</span>
           </Link>
@@ -80,15 +80,15 @@ class Mysider extends React.Component {
   render() {
     return (
       <Sider trigger={null} collapsible collapsed={this.props.collapsed}>
-          <div className="logo" />
-          <Menu theme="dark" mode="inline"
-                selectedKeys={[this.state.selectedKey]}
-                openKeys={[this.state.openKey]}
-                onOpenChange={this.openMenu.bind(this)}
-                onClick={this.menuClick.bind(this)}>
-            {menus && menus.map(menu => this.renderMenuItem(menu))}
-          </Menu>
-        </Sider>
+        <div className="logo" />
+        <Menu theme="dark" mode="inline"
+          selectedKeys={[this.state.selectedKey]}
+          openKeys={[this.state.openKey]}
+          onOpenChange={this.openMenu.bind(this)}
+          onClick={this.menuClick.bind(this)}>
+          {menus && menus.map(menu => this.renderMenuItem(menu))}
+        </Menu>
+      </Sider>
     );
   }
 }

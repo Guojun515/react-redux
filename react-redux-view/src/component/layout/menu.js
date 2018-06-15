@@ -12,8 +12,9 @@ export const menus = [
         icon : 'sync',
         sub : [
             {
-                title : '任务',
+                title : '定时调度',
                 url : '/app/task/aaa', 
+                icon : 'clock-circle-o'
             }
         ]
     }
