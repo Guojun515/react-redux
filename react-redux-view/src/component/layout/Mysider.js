@@ -80,7 +80,7 @@ class Mysider extends React.Component {
   render() {
     return (
       <Sider trigger={null} collapsible collapsed={this.props.collapsed}>
-        <div className="logo" />
+        <div className="logo">React redux</div>
         <Menu theme="dark" mode="inline"
           selectedKeys={[this.state.selectedKey]}
           openKeys={[this.state.openKey]}

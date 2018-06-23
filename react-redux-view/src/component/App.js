@@ -7,8 +7,8 @@ import AppRoute from "./routes/AppRoute";
 import { menus } from './layout/menu';
 
 import 'antd/dist/antd.css';
-import './../style//app.less';
-
+import './../style/app.less';
+import './../style/text.less';
 
 const { Content, Footer } = Layout
 
@@ -80,7 +80,7 @@ class App extends React.Component {
   render() {
     return (
       <Layout id='layout'>
-        <Mysider collapsed={this.state.collapsed} currentMenuTitle = {this.currentMenuTitle} />
+        <Mysider collapsed={this.state.collapsed} currentMenuTitle={this.currentMenuTitle} />
         <Layout>
           <Myheader collapsed={this.state.collapsed} toggle={this.toggle} />
           <Content style={{ margin: '10px 16px ', padding: 10, minHeight: 680 }}>
@@ -93,7 +93,7 @@ class App extends React.Component {
                 })
               }
             </Breadcrumb>
-            <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
+            <div style={{ minHeight: 280 }}>
               <AppRoute />
             </div>
           </Content>

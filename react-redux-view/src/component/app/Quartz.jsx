@@ -6,7 +6,7 @@ const { Content } = Layout;
 const Search = Input.Search;
 const Option = Select.Option;
 
-class Aaa extends Component {
+class Quartz extends Component {
 
     /**
      * 构造函数
@@ -18,8 +18,6 @@ class Aaa extends Component {
         this.state = {
 
         }
-
-        console.log(store.getState());
     }
 
 
@@ -95,7 +93,7 @@ class Aaa extends Component {
 
         //组件的属性可以在组件类的 this.props 对象上获取,调用函数需要给函数bind this
         return (
-            <Layout style = {{backgroundColor : "#FFF"}}>
+            <Layout style = {{backgroundColor : "#FFF", padding : 20}}>
                 <Row>
                     <Col {...colProps}>
                         {getFieldDecorator("userName")(<Search placeholder="用户名" />)}
@@ -127,4 +125,4 @@ class Aaa extends Component {
     }
 }
 
-export default Form.create()(Aaa);;
+export default Form.create()(Quartz);;

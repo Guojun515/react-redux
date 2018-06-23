@@ -1,8 +1,8 @@
 import React from "react";
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
-import Study from '../app/Study';
-import Aaa from '../app/Aaa';
+import AppIndex from '../app/AppIndex';
+import Quartz from '../app/Quartz';
 
 /**
  * 登录检测(redux-auth-wrapper 组件)
@@ -24,8 +24,8 @@ class AppRoute extends React.Component {
     render() {
         return (
             <Switch>
-                <Route exact path="/app/index" component={userIsAuthenticated(Study)} />
-                <Route exact path="/app/task/aaa" component={userIsAuthenticated(Aaa)} />
+                <Route exact path="/app/index" component={userIsAuthenticated(AppIndex)} />
+                <Route exact path="/app/task/quartz" component={userIsAuthenticated(Quartz)} />
                 <Route render={() => <Redirect to='/404' />} />
             </Switch>
         );

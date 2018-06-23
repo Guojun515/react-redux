@@ -13,7 +13,7 @@ export const menus = [
         sub : [
             {
                 title : '定时调度',
-                url : '/app/task/aaa', 
+                url : '/app/task/quartz', 
                 icon : 'clock-circle-o'
             }
         ]
