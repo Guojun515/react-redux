@@ -1,0 +1,4 @@
+.vscode/
+react-redux-view/.vscode/
+react-redux-view/build/
+react-redux-view/node_modules/
