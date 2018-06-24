@@ -9,13 +9,15 @@ import Quartz from '../app/Quartz';
  */
 const userIsAuthenticated = connectedRouterRedirect({
     // The url to redirect user to if they fail
-   redirectPath: '/login',
+    redirectPath: '/login',
     // If selector is true, wrapper will not redirect
     // For example let's check that state contains user data
-   authenticatedSelector: state => true, //state.userInfo.userName !== "",
-   // A nice display name for this check
-   wrapperDisplayName: 'UserIsAuthenticated'
- });
+    authenticatedSelector: state => {
+        return state.userInfo.isLogin
+    },
+    // A nice display name for this check
+    wrapperDisplayName: 'UserIsAuthenticated'
+});
 
 /**
  * 应用页面级别的路由

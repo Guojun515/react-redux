@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 import qs from 'qs';
 
 import { post } from './../axios/HttpUtils';
-import * as URLConfig from './../axios/URLConfig'
-import { createLogin } from './../store/login/login-action';
+import { userAction } from './../store/login/login-action';
 
 
 import './../style/login.less';
@@ -37,14 +36,14 @@ class Login extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 this.showLoading(true);
-                post(URLConfig.LOGIN_URL, qs.stringify(values) ,{
+                post('/user/doLogin', qs.stringify(values) ,{
                     headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
                       }
                 }).then((response) => {
                      this.showLoading(false);
                     if (response) {
-                        this.props.createLogin(response);
+                        this.props.createLogin({isLogin : true, ...response});
                         this.props.history.push("/app/index");
                     }
                 }).catch ((e) => {
@@ -109,13 +108,20 @@ Login.propTypes = {
     createLogin: PropTypes.func.isRequired
 }
 
-export default connect(
-    (state) => {
-        return {
-            userName: state.userInfo.userName
-        }
-    },
-    {
-        createLogin
+/**
+ * 把state对象映射到props中
+ */ 
+const mapStateToProps = (state) => {
+    return {
+        userName: state.userInfo.userName
     }
-)(Form.create()(Login));
+}
+
+/**
+ * 用来建立 UI 组件的参数到store.dispatch方法的映射
+ */
+const mapDispatchToProps = {
+    createLogin : userAction.createLogin
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(Login));

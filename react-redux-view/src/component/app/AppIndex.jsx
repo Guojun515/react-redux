@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'
-import { Layout, Row, Col, Calendar, Progress, Divider, Card, Icon } from 'antd'
+import { connect } from 'react-redux';
+import { Layout, Row, Col, Calendar, Progress, Divider, Card, Icon } from 'antd';
+import {appIndexAction} from './../../store/appIndex/appIndex-action'
 
 
 class AppIndex extends Component {
@@ -17,6 +18,20 @@ class AppIndex extends Component {
         }
     }
 
+    componentWillMount () {
+        //初始化先执行一次
+        this.props.getappIndexData();
+        
+        //定时执行
+        this.timeId = setInterval(() => {
+            this.props.getappIndexData();
+        }, 5000);
+    }
+
+    componentWillUnmount () {
+        clearInterval(this.timeId);
+    }
+
 
     render() {
         const colProps = {
@@ -29,6 +44,8 @@ class AppIndex extends Component {
                 border: '10px solid #EAEAEA'
             }
         }
+
+        let data = this.props.appIndexData;
 
         //组件的属性可以在组件类的 this.props 对象上获取,调用函数需要给函数bind this
         return (
@@ -43,16 +60,16 @@ class AppIndex extends Component {
                                 Total Memory
                             </Col>
                             <Col span={20} >
-                                <Progress percent={50} style={{ width: '80%' }} status="active" />
+                                <Progress percent={data.totalMemoryUsed} style={{ width: '80%' }} status="active" />
                             </Col>
                         </Row>
                         <Row style={{ marginTop: 80, textAlign: "center" }}>
                             <Col span={10}>
-                                <Progress percent={75} type="dashboard" />
+                                <Progress percent={data.heapMemoryUsed} type="dashboard" />
                                 <p style={{ marginTop: 20 }}>Heap Memory</p>
                             </Col>
                             <Col span={10} >
-                                <Progress percent={30} type="dashboard" />
+                                <Progress percent={data.noHeapMemoryUsed} type="dashboard" />
                                 <p style={{ marginTop: 20 }}>NoHeap Memory</p>
                             </Col>
                         </Row>
@@ -70,7 +87,7 @@ class AppIndex extends Component {
                                         </div>
                                         <div className="clear">
                                             <div className="text-muted">Thread Count</div>
-                                            <h2>301</h2>
+                                            <h2>{data.threadCount}</h2>
                                         </div>
                                     </div>
                                 </Card>
@@ -81,7 +98,7 @@ class AppIndex extends Component {
                                         </div>
                                         <div className="clear">
                                             <div className="text-muted">Deadlock Thread Count</div>
-                                            <h2>30122</h2>
+                                            <h2>{data.deadlockThreadCount}</h2>
                                         </div>
                                     </div>
                                 </Card>
@@ -94,7 +111,7 @@ class AppIndex extends Component {
                                         </div>
                                         <div className="clear">
                                             <div className="text-muted">Deamon Thread Count</div>
-                                            <h2>802</h2>
+                                            <h2>{data.deamonThreadCount}</h2>
                                         </div>
                                     </div>
                                 </Card>
@@ -105,7 +122,21 @@ class AppIndex extends Component {
                                         </div>
                                         <div className="clear">
                                             <div className="text-muted">Deadlocks Thread</div>
-                                            <h2>102</h2>
+                                            {
+                                                data.deadlocksThread.map((thread, index) => {
+                                                    if (index < 5) {
+                                                        return (
+                                                            <p key = {index}>{thread}</p>
+                                                        );
+                                                    } else if (index === 5) {
+                                                        return (
+                                                            <p key = {index}>...</p>
+                                                        ); 
+                                                    } else {
+                                                        return null;
+                                                    }
+                                                }) 
+                                            }
                                         </div>
                                     </div>
                                 </Card>
@@ -123,7 +154,7 @@ class AppIndex extends Component {
                                         </div>
                                         <div className="clear">
                                             <div className="text-muted">Class Load Count</div>
-                                            <h2>301</h2>
+                                            <h2>{data.classLoadCount}</h2>
                                         </div>
                                     </div>
                                 </Card>
@@ -136,7 +167,7 @@ class AppIndex extends Component {
                                         </div>
                                         <div className="clear">
                                             <div className="text-muted">Class Unload Count</div>
-                                            <h2>802</h2>
+                                            <h2>{data.classUnloadCount}</h2>
                                         </div>
                                     </div>
                                 </Card>
@@ -150,11 +181,19 @@ class AppIndex extends Component {
 }
 
 /**
- * 使用 PropTypes 进行类型检查
- */
-AppIndex.propTypes = {
-    name: PropTypes.string.isRequired, //表示字符串类型，为必填
-    val: PropTypes.number
+ * 把state对象映射到props中
+ */ 
+const mapStateToProps = (state) => {
+    return {
+        appIndexData : state.appIndexData
+    }
 }
 
-export default AppIndex;
+/**
+ * 用来建立 UI 组件的参数到store.dispatch方法的映射
+ */
+const mapDispatchToProps = {
+    getappIndexData : appIndexAction.getappIndexData
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppIndex);

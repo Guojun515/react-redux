@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { notification } from 'antd';
 
+//默认携带cookie信息
+axios.defaults.withCredentials=true;
+
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
 

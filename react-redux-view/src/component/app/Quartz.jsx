@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import store from '../../store/store';
 import { Layout, Row, Col, Form, Input, Select, Button, Table, Divider } from 'antd';
 
 const { Content } = Layout;
@@ -19,7 +18,6 @@ class Quartz extends Component {
 
         }
     }
-
 
     render() {
         const { getFieldDecorator } = this.props.form;
